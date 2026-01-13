@@ -1,18 +1,26 @@
 package contacts;
 
-public class Contact {
-    private String name;
-    private String surname;
-    private String number;
+import java.time.LocalDateTime;
 
-    public Contact(String name, String surname, String number) {
-        this.name = name;
-        this.surname = surname;
-        if (checkNumber(number)) this.number = number;
-        else {
-            System.out.println("Wrong number format!");
-            this.number = null;
-        }
+abstract public class Contact {
+    private final Type type;
+    protected String name;
+    protected String number;
+    protected LocalDateTime  timeCreated;
+    protected LocalDateTime timeLastEdit;
+
+
+    public abstract String getShortInfo();
+    public abstract String getInfo();
+
+    public Contact(Type type) {
+        this.type = type;
+        timeCreated = LocalDateTime.now();
+        timeLastEdit = LocalDateTime.now();
+    }
+
+    public Type getType() {
+        return type;
     }
 
     public boolean checkNumber(String phone) {
@@ -31,25 +39,9 @@ public class Contact {
         return true;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getNumber() {
-        if (number == null) return "[no number]";
-        return number;
+        timeLastEdit = LocalDateTime.now();
     }
 
     public void setNumber(String number) {
@@ -58,5 +50,6 @@ public class Contact {
             System.out.println("Wrong number format!");
             this.number = null;
         }
+        timeLastEdit = LocalDateTime.now();
     }
 }
