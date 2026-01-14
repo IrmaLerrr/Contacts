@@ -1,9 +1,9 @@
 package contacts;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-abstract public class Contact {
-    private final Type type;
+abstract public class Contact implements Serializable {
     protected String name;
     protected String number;
     protected LocalDateTime  timeCreated;
@@ -12,15 +12,12 @@ abstract public class Contact {
 
     public abstract String getShortInfo();
     public abstract String getInfo();
+    public abstract void edit();
+    public abstract String getSearchString();
 
-    public Contact(Type type) {
-        this.type = type;
+    public Contact() {
         timeCreated = LocalDateTime.now();
         timeLastEdit = LocalDateTime.now();
-    }
-
-    public Type getType() {
-        return type;
     }
 
     public boolean checkNumber(String phone) {
